@@ -25,17 +25,22 @@
 
 - 이미지 빌드 
 
-> docker build -t img:0.01 ./ 
+> docker build -t ds-img:0.01 ./ 
 
 
 - 권한확인 
 
-> id gogamza
-
-> uid=1000(gogamza) gid=1000(gogamza) 그룹들=1000(gogamza),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),121(lpadmin),132(sambashare),998(docker)
+> uid=1000(sooheang) gid=1000(sooheang) 그룹들=1000(sooheang),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),121(lpadmin),132(sambashare),998(docker)
 - 실행
 
-> docker run --runtime=nvidia -e NB_GID=1000  -e NB_UID=1000 -e GRANT_SUDO=yes --name gogamza --user root -v /home/gogamza/work:/home/gogamza/work -d -p 8888:8888 img:0.01 start.sh jupyter lab --NotebookApp.token='a1234'
+> docker run --runtime=nvidia \
+-e NB_GID=1000  -e NB_UID=1000 \
+ -e GRANT_SUDO=yes \
+--name ds-img \
+--user root \
+-v /data:/home/sooheang/work \
+-d -p 8888:8888 \
+ds-img:0.01 start.sh jupyter lab --NotebookApp.token='a1234'
 
 
 ### 스크린샷 
