@@ -1,6 +1,8 @@
 #!/bin/bash
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+DOCKER_USER = sooheang
+HOME_PATH = /home/sooheang
 
 set -e
 
@@ -16,18 +18,18 @@ if [ $(id -u) == 0 ] ; then
 
     # Handle username change. Since this is cheap, do this unconditionally
     echo "Set username to: $NB_USER"
-    usermod -d /home/$NB_USER -l $NB_USER gogamza
+    usermod -d /home/$NB_USER -l $NB_USER $DOCKER_USER
 
     # handle home and working directory if the username changed
-    if [[ "$NB_USER" != "gogamza" ]]; then
+    if [[ "$NB_USER" != "$DOCKER_USER" ]]; then
         # changing username, make sure homedir exists
         # (it could be mounted, and we shouldn't create it if it already exists)
         if [[ ! -e "/home/$NB_USER" ]]; then
             echo "Relocating home dir to /home/$NB_USER"
-            mv /home/gogamza "/home/$NB_USER"
+            mv $HOME_PATH "/home/$NB_USER"
         fi
         # if workdir is in /home/gogamza, cd to /home/$NB_USER
-        if [[ "$PWD/" == "/home/gogamza/"* ]]; then
+        if [[ "$PWD/" == "$HOME_PATH"* ]]; then
             newcwd="/home/$NB_USER/${PWD:13}"
             echo "Setting CWD to $newcwd"
             cd "$newcwd"

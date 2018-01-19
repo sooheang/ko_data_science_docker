@@ -2,10 +2,11 @@
 #텐서플로 mxnet 동시 지원 도커 이미지로 시작 
 FROM nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04
 
-LABEL maintainer="gogamza <madjakarta@gmail.com>"
+#LABEL maintainer="gogamza <madjakarta@gmail.com>"
+LABEL maintainer='sooheang <eo.sooheang@gmail.com>'
 
-
-ARG PY_VER=3.6
+ARG PY_VER=3.5
+DOCKER_USER=sooheang
 
 
 USER root
@@ -58,7 +59,7 @@ RUN apt-get update && \
 # 환경 변수 
 ENV VENV_DIR=/opt/venv \
     SHELL=/bin/bash \
-    NB_USER=gogamza \
+    NB_USER=$DOCKER_USER \
     NB_UID=1000 \
     NB_GID=100 \
     LC_ALL=en_US.UTF-8 \
